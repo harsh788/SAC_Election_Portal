@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const electionSchema = new Schema({
     title: {type: String, required: true},
-    voters: [{type: Schema.Types.ObjectId, ref: "Student"}],
+    voter_list: [{type: Schema.Types.ObjectId, ref: "Student"}],
     votes: [{type: Schema.Types.ObjectId, ref: "Vote"}],
     candidates: [{type: Schema.Types.ObjectId, ref: "Candidate"}],
 });

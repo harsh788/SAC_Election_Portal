@@ -9,8 +9,8 @@ const candidateSchema = new Schema({
     batch: {
         type: String, 
         required: true, 
-        enum: ["iMtech", "Mtech", "Msc"],
-        default: "iMtech",
+        enum: ["IMT2020", "IMT2019", "MT2022"],
+        default: "IMT2020",
     },
     message: {type: String, required: true},
 });
