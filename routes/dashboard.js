@@ -87,3 +87,6 @@ router.get("/vote/create", vote_controller.vote_create);
 
 // GET request for list of all votes
 router.get("/votes", vote_controller.vote_list);
+
+
+module.exports = router;

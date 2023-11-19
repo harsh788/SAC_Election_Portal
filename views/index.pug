@@ -3,3 +3,11 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+
+  h3 Stats so far 
+  
+  ul 
+    li #[strong Active Elections:] !{election_count}
+    li #[strong Total Candidates:] !{candidate_count}
+    li #[strong Total Students registered:] !{student_count}
+    li #[strong Total Votes casted so far:] !{vote_count}
