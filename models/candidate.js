@@ -15,6 +15,10 @@ const candidateSchema = new Schema({
     message: {type: String, required: true},
 });
 
+candidateSchema.virtual("url").get(function() {
+    return `/dashboard/candidate/${this._id}`;
+});
+
 // Virtual for full name of the candidate
 candidateSchema.virtual("full_name").get(function () {
     let full_name = "";

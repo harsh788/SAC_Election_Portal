@@ -9,5 +9,9 @@ const electionSchema = new Schema({
     candidates: [{type: Schema.Types.ObjectId, ref: "Candidate"}],
 });
 
+electionSchema.virtual("url").get(function() {
+    return `/dashboard/election/${this._id}`;
+});
+
 // Export module
 module.exports = mongoose.model("Election", electionSchema);

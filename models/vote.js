@@ -8,4 +8,8 @@ const voteSchema = new Schema({
     selection: {type: Schema.Types.ObjectId, ref: "Candidate", required: true},
 });
 
+voteSchema.virtual("url").get(function() {
+    return `/dashboard/vote/${this._id}`;
+});
+
 module.exports = mongoose.model("Vote", voteSchema);
