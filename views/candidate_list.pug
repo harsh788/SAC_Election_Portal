@@ -1,0 +1,13 @@
+extend layout 
+
+block content 
+  h1= title 
+
+  ul
+    each candidate in candidate_list 
+      li 
+        a(href=candidate.url) #{candidate.full_name} 
+        | #{candidate.batch}  
+    
+    else 
+      li There are no students registered on this portal.

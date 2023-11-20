@@ -16,14 +16,14 @@ const candidateSchema = new Schema({
 });
 
 candidateSchema.virtual("url").get(function() {
-    return `/candidate/${this._id}`;
+    return `/dashboard/candidate/${this._id}`;
 });
 
 // Virtual for full name of the candidate
 candidateSchema.virtual("full_name").get(function () {
     let full_name = "";
     if(this.first_name && this.last_name) {
-        full_name = `${this.first_name}, ${this.last_name}`;
+        full_name = `${this.first_name} ${this.last_name}`;
     }
 
     return full_name;
