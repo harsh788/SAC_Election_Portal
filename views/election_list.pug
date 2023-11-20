@@ -5,7 +5,7 @@ block content
   ul 
     each election in election_list 
       li 
-        h4 #{election.title} 
+        a(href=`${election.url}/stats/`) #{election.title} 
         p #[strong Number of candidates:] #{election.candidates.length} 
         p #[strong Number of voters:] #{election.voter_list.length} 
         p #[strong Number of voters already voted:] #{election.votes.length} 

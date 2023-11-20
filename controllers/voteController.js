@@ -2,6 +2,7 @@ const Vote = require("../models/vote");
 const Student = require("../models/student");
 const Candidate = require("../models/candidate");
 const asyncHandler = require("express-async-handler");
+const Election = require("../models/election");
 
 // Display list of all votes (display all information here)
 exports.vote_list = asyncHandler(async (req, res, next) => {
@@ -9,8 +10,8 @@ exports.vote_list = asyncHandler(async (req, res, next) => {
     
     let allCandidates = [], allStudents = [];
     for(let index=0;index<allVotes.length;index++) {
-        allCandidates.push(await Candidate.findById(allVotes[index].selection).exec());
-        allStudents.push(await Student.findById(allVotes[index].voter).exec());
+        allCandidates.push(await Candidate.findById(allVotes[index].selection, "first_name").exec());
+        allStudents.push(await Student.findById(allVotes[index].voter, "name").exec());
     }
     // console.log(allStudents);
     res.render("vote_list", {

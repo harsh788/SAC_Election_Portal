@@ -26,7 +26,7 @@ router.get("/election/:id", election_controller.election_vote_get);
 router.post("/election/:id", election_controller.election_vote_post);
 
 // GET request for election standings
-// router.get("/election/:id/stats", election_controller.election_stats_get);
+router.get("/election/:id/stats", election_controller.election_stats_get);
 
 // GET request for list of all elections
 router.get("/elections", election_controller.election_list);

@@ -38,6 +38,29 @@ exports.election_list = asyncHandler(async (req, res, next) => {
     });
 });
 
+// Display the stats for a particular election
+exports.election_stats_get = asyncHandler(async (req, res, next) => {
+    const election = await Election.findById(req.params.id).exec();
+    let votes = new Map();
+
+    for(let index=0;index<election.votes.length;index++) {
+        const vote = await Vote.findById(election.votes[index]).exec();
+        const candidate = await Candidate.findById(vote.selection, "first_name").exec();
+
+        if(votes.has(candidate.first_name)) {
+            votes.set(candidate.first_name, votes.get(candidate.first_name)+1);
+        } else {
+            votes.set(candidate.first_name, 1);
+        }
+    }
+    console.log(votes);
+
+    res.render("election_stats", {
+        title: election.title,
+        votes: Object.fromEntries(votes),
+    });
+});
+
 // Cast a vote (GET)
 exports.election_vote_get = asyncHandler(async (req, res, next) => {
     const election_detail = await Election.findById(req.params.id).exec();
@@ -81,6 +104,7 @@ exports.election_vote_post = asyncHandler(async (req, res, next) => {
         voter: voter,
         timestamp: new Date(),
         selection: candidate,
+        election: await Election.findById(req.params.id).exec(),
     });
     await vote.save();
     res.redirect('/dashboard');

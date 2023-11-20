@@ -1,0 +1,9 @@
+extend layout 
+
+block content 
+  h1= title
+  
+  p The current standings of the election: 
+  
+  each count, candidate in votes
+    p #[strong Candidate:] #{candidate} #[strong Votes:] #{count}
