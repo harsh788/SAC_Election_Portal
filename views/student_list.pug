@@ -1,0 +1,13 @@
+extend layout 
+
+block content 
+  h1= title 
+
+  ul
+    each student in student_list 
+      li 
+        a(href=student.url) #{student.name} 
+        | #{student.roll_number} 
+    
+    else 
+      li There are no students registered on this portal.

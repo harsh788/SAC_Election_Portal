@@ -1,0 +1,10 @@
+extend layout 
+
+block content 
+  h4 Student: #{student.name} 
+  p #{student.roll_number} 
+
+  p 
+    | #{student.name} 
+    | #{student_vote ? "voted for "+ student_vote.first_name : "has not voted yet"} 
+
