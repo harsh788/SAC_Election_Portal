@@ -1,0 +1,19 @@
+extend layout 
+
+block content 
+  h1= title 
+  
+  h4 #{election.title} 
+  form(method='POST' action='')
+    div.form-group
+      label(for='voter_name') Name: 
+      input#voter_name.form-control(type='text' placeholder='Enter your name' name='voter_name' required='true')
+      label(for='voter_roll_number') Roll number: 
+      input#voter_roll_number.form-control(type='text' placeholder='Enter your roll number' name='voter_roll_number' required='true')
+    div.form-group
+      h4 Make your selection 
+      each candidate in candidates  
+        input(type='radio' id=candidate.roll_number name='choice' value=candidate.roll_number)
+        a(href=candidate.url) #{candidate.full_name}
+        br   
+    button.btn.btn-primary(type='submit') Vote 

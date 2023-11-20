@@ -1,0 +1,14 @@
+extend layout 
+
+block content 
+  h1= title 
+  ul 
+    each election in election_list 
+      li 
+        h4 #{election.title} 
+        p #[strong Number of candidates:] #{election.candidates.length} 
+        p #[strong Number of voters:] #{election.voter_list.length} 
+        p #[strong Number of voters already voted:] #{election.votes.length} 
+        form(method='GET' action=election.url)
+          button.btn.btn-primary(type='submit') Vote 
+        hr
