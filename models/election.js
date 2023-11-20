@@ -10,7 +10,7 @@ const electionSchema = new Schema({
 });
 
 electionSchema.virtual("url").get(function() {
-    return `/dashboard/election/${this._id}`;
+    return `/election/${this._id}`;
 });
 
 // Export module
