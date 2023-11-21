@@ -53,7 +53,6 @@ exports.election_stats_get = asyncHandler(async (req, res, next) => {
             votes.set(candidate.first_name, 1);
         }
     }
-    console.log(votes);
 
     res.render("election_stats", {
         title: election.title,
@@ -96,18 +95,25 @@ exports.election_vote_post = asyncHandler(async (req, res, next) => {
             candidate_list: candidate_list,
             errors: "Student with roll number " + req.body.voter_roll_number + " is not authorised to vote."
         });
-    }
+    } else {
+        // Get candidate details
+        const candidate = await Candidate.findOne({ roll_number: req.body.choice });
+        
+        const vote = new Vote({
+            voter: voter,
+            timestamp: new Date(),
+            selection: candidate,
+            election: await Election.findById(req.params.id).exec(),
+        });
 
-    const candidate = await Candidate.findOne({ roll_number: req.body.choice });
-    
-    const vote = new Vote({
-        voter: voter,
-        timestamp: new Date(),
-        selection: candidate,
-        election: await Election.findById(req.params.id).exec(),
-    });
-    await vote.save();
-    res.redirect('/dashboard');
+        // Add vote to election's vote_list
+        const election = await Election.findOne({candidates: candidate});
+        election.votes.push(vote);
+        await election.save();
+
+        await vote.save();
+        res.redirect('/dashboard');
+    }
 });
 
 // Create new election (GET)

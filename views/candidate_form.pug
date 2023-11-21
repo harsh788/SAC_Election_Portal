@@ -20,7 +20,12 @@ block content
     div.form-group 
       label(for='message') Message: 
       input#message.form-control(type='text', placeholder='Enter candidate\'s message' name='message' value=(undefined===candidate?'':candidate.message))
-
+    div.form-group 
+      each election in election_list 
+        input(type='radio' id=election.title name='choice' value=election.title)
+        label(for=election.title) #{election.title}
+        br 
+        
     button.btn.btn-primary(type='submit') Submit 
 
   if errors 
