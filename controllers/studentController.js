@@ -1,6 +1,7 @@
 const Student = require("../models/student");
 const Vote = require("../models/vote");
 const Candidate = require("../models/candidate");
+const Election = require("../models/election");
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
@@ -37,7 +38,12 @@ exports.student_detail = asyncHandler(async (req, res, next) => {
 
 // Add a new student (GET)
 exports.student_create_get = asyncHandler(async (req, res, next) => {
-    res.render("student_form", {title: "Add student"});
+    const allElections = await Election.find({}, "title").exec();
+    
+    res.render("student_form", {
+        title: "Add student",
+        election_list: allElections,
+    });
 });
 
 // Add a new student (POST)
@@ -72,8 +78,12 @@ exports.student_create_post = [
                 student: student,
             });
         } else {
+            const election = await Election.findOne({title: req.body.choice});
+            election.voter_list.push(student);
+            await election.save();
+
             await student.save();
-            res.redirect(student.url);
+            res.redirect("/dashboard");
         }
     })
 ]

@@ -15,7 +15,12 @@ block content
         option(value="IMT2020" selected=(undefined===student || student.batch!='IMT2020' ? false : 'selected')) IMT2020 
         option(value="IMT2019" selected=(undefined===student || student.batch!='IMT2019' ? false : 'selected')) IMT2019 
         option(value="MT2022" selected=(undefined===student || student.batch!='MT2022' ? false : 'selected')) MT2022 
-
+    div.form-group 
+      each election in election_list 
+        input(type='radio' id=election.title name='choice' value=election.title)
+        label(for=election.title) #{election.title}
+        br 
+        
     button.btn.btn-primary(type='submit') Submit 
 
   if errors 
