@@ -15,7 +15,7 @@ const studentSchema = new Schema({
 
 // Virtual for student url
 studentSchema.virtual("url").get(function() {
-    return `./student/${this._id}`;
+    return `/dashboard/student/${this._id}`;
 });
 
 module.exports = mongoose.model("Student", studentSchema);

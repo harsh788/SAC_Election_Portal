@@ -1,0 +1,23 @@
+extend layout 
+
+block content 
+  h1= title 
+
+  h3 #[strong Student's name:] #{student.name} 
+
+  p The following votes involving #{student.name} will be deleted 
+  ul 
+    each vote in vote_list 
+      li 
+        p #{student.name} voted for #{candidate_list.full_name} on #{vote.timestamp} 
+
+  p The following elections' student list will be updated 
+  ul 
+    each election in election_list 
+      li 
+        p #{election.title} 
+  
+  p Are you sure?
+  form(method='POST' action='')
+    div.form-group
+      button.btn.btn-primary(type='submit') Delete  

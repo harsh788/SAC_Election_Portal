@@ -90,12 +90,53 @@ exports.student_create_post = [
 
 // Delete a student (GET)
 exports.student_delete_get = asyncHandler(async (req, res, next) => {
+    const student = await Student.findById(req.params.id).exec();
+    const vote_list = await Vote.find({voter: student}).exec();
+    const election_list = await Election.find({voter_list: student}, "title").exec();
 
+    let candidate_name = [];
+    for(let index=0;index<vote_list.length;index++) {
+        candidate_name.push(await Candidate.findById(vote_list[index].selection, "first_name").exec());
+    }
+
+    res.render("student_delete", {
+        title: "Delete student entry",
+        student: student,
+        vote_list: vote_list,
+        candidate_list: candidate_name,
+        election_list: election_list,
+    });
 });
 
 // Delete a student (POST)
 exports.student_delete_post = asyncHandler(async (req, res, next) => {
+    const student = await Student.findById(req.params.id).exec();
+    const vote_list = await Vote.find({voter: student}).exec();
+    const election_list = await Election.find({voter_list: student}, "title").exec();
 
+    // Update the vote list and candidate list of the elections which involves the student to be deleted
+    for(index=0;index<election_list.length;index++) {
+        let old_election = election_list[index];
+        const updatedElection = await Election.findByIdAndUpdate(
+            old_election.id,
+            {
+                $pull: {
+                    votes: { $in: vote_list }, // Remove votes present in vote_list
+                    voter_list: student._id // Remove the specific student
+                }
+            },
+            { new: true } // To return the updated document
+        );
+    }
+
+    // Delete votes from vote_list which involves the student to be deleted.
+    for(index=0;index<vote_list.length;index++) {
+        await Vote.findByIdAndDelete(vote_list[index].id);
+    }
+
+    // Delete the student
+    await Student.findByIdAndDelete(req.params.id);
+    res.redirect("/dashboard/students");
 });
 
 // Update a student (GET)
