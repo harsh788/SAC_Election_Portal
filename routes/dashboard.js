@@ -88,8 +88,11 @@ router.get("/candidates", candidate_controller.candidate_list);
 
 // ------ Vote routes ------
 
-// POST request for adding new vote
-router.post("/vote/create", vote_controller.vote_create);
+// GET request for updating vote
+router.get("/vote/:id/update", vote_controller.vote_update_get);
+
+// POST request for updating vote
+router.post("/vote/:id/update", vote_controller.vote_update_post);
 
 // GET request for list of all votes
 router.get("/votes", vote_controller.vote_list);

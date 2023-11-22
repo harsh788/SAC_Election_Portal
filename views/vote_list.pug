@@ -6,3 +6,4 @@ block content
   ul 
     each vote, index in vote_list 
       li #[strong #{student_list[index].name}] voted for #[strong #{candidate_list[index].first_name}] on #{vote.timestamp} 
+      a(href=vote.url+"/update") Update 

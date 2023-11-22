@@ -1,0 +1,14 @@
+extend layout 
+
+block content 
+  h1= title 
+
+  p Select your choice from the following candidates 
+  form(method='POST' action='')
+    each candidate in candidates  
+      input(type='radio' id=candidate.roll_number name='choice' value=candidate.roll_number)
+      a(href=candidate.url) #{candidate.full_name}
+      br 
+    
+    button.btn.btn-primary(type='submit') Update  
+        
