@@ -3,6 +3,7 @@ import './App.css';
 import Navigation from './components/Navbar';
 import { BrowserRouter as Router, Route, BrowserRouter, Routes } from "react-router-dom";
 import Elections from './components/Elections';
+import Participants from './components/Participants';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Elections />} />
           <Route path="/dashboard" element={<Elections />} />
+          <Route path="/participants" element={<Participants />} />
         </Routes>
       </BrowserRouter>
     </div>
