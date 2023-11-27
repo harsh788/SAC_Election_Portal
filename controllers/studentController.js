@@ -9,10 +9,11 @@ const { body, validationResult } = require("express-validator");
 exports.student_list = asyncHandler(async (req, res, next) => {
     const allStudents = await Student.find().sort({ roll_number: 1, name: 1 }).exec();
 
-    res.render("student_list", {
-        title: "Registered students",
-        student_list: allStudents,
-    });
+    // res.render("student_list", {
+    //     title: "Registered students",
+    //     student_list: allStudents,
+    // });
+    res.json(allStudents);
 });
 
 // Display detail page for a student

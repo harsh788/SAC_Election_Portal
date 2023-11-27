@@ -10,10 +10,11 @@ const { body, validationResult } = require("express-validator");
 exports.candidate_list = asyncHandler(async (req, res, next) => {
     const allCandidates = await Candidate.find().sort({first_name: 1}).exec();
 
-    res.render("candidate_list", {
-        title: "Candidates standing for the election",
-        candidate_list: allCandidates,
-    });
+    // res.render("candidate_list", {
+    //     title: "Candidates standing for the election",
+    //     candidate_list: allCandidates,
+    // });
+    res.json(allCandidates);
 });
 
 // Display detail page for a candidate
