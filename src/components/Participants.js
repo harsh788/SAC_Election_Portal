@@ -2,10 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import Sidebar from './Sidebar';
+import AddStudent from './AddStudent';
 
 const Participants = () => {
     const [students, setStudents] = useState([]);
     const [candidates, setCandidates] = useState([]);
+    const [addStudent, setAddStudent] = useState(false);
+
+    const toggleAddStudent = () => {
+        console.log("inside");
+        setAddStudent(!addStudent);
+    }
 
     useEffect(() => {
         const fetchStudents = async () => {
@@ -46,11 +53,11 @@ const Participants = () => {
                         </li>
                     ))}
                 </ul>
-                <Link to={`/dashboard/election/`}>
-                    <Button type="submit" color="primary">
-                        Add Student
-                    </Button>
-                </Link>
+                {!addStudent && <Button type="submit" color="primary" onClick={toggleAddStudent}>
+                    Add Student
+                </Button>} 
+                <br />
+                {addStudent && <AddStudent toggleAddStudent={toggleAddStudent}/>}
             </div>
         );
     }
@@ -71,7 +78,7 @@ const Participants = () => {
                     ))}
                 </ul>
                 <Link to={`/dashboard/election/`}>
-                    <Button type="submit" color="primary">
+                    <Button type="submit" color="primary" >
                         Add Candidate
                     </Button>
                 </Link>
