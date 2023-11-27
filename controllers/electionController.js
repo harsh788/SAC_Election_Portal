@@ -31,11 +31,31 @@ exports.index = asyncHandler(async (req, res, next) => {
 // Display all the ongoing elections
 exports.election_list = asyncHandler(async (req, res, next) => {
     const allElections = await Election.find().exec();
+    const votesPerElection = [];
 
-    res.render("election_list", {
-        title: "Ongoing elections",
-        election_list: allElections,
-    });
+    for(let i=0;i<allElections.length;i++) {
+        let votes = new Map();
+        let election = allElections[i];
+
+        for(let index=0;index<election.votes.length;index++) {
+            const vote = await Vote.findById(election.votes[index]).exec();
+            const candidate = await Candidate.findById(vote.selection, "first_name").exec();
+
+            if(votes.has(candidate.first_name)) {
+                votes.set(candidate.first_name, votes.get(candidate.first_name)+1);
+            } else {
+                votes.set(candidate.first_name, 1);
+            }
+        }
+        votesPerElection.push(Object.fromEntries(votes));
+    }
+    // console.log(votesPerElection);
+
+    // res.render("election_list", {
+    //     title: "Ongoing elections",
+    //     election_list: allElections,
+    // });
+    res.status(200).send({elections: allElections, votes: votesPerElection});
 });
 
 // Display the stats for a particular election
