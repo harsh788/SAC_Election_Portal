@@ -102,11 +102,18 @@ exports.student_delete_get = asyncHandler(async (req, res, next) => {
         candidate_name.push(await Candidate.findById(vote_list[index].selection, "first_name").exec());
     }
 
-    res.render("student_delete", {
+    // res.render("student_delete", {
+        // title: "Delete student entry",
+        // student: student,
+        // vote_list: vote_list,
+        // candidate_list: candidate_name,
+        // election_list: election_list,
+    // });
+    res.json({
         title: "Delete student entry",
         student: student,
         vote_list: vote_list,
-        candidate_list: candidate_name,
+        candidate_name: candidate_name,
         election_list: election_list,
     });
 });
@@ -139,7 +146,7 @@ exports.student_delete_post = asyncHandler(async (req, res, next) => {
 
     // Delete the student
     await Student.findByIdAndDelete(req.params.id);
-    res.redirect("/dashboard/students");
+    res.status(200);
 });
 
 // Update a student (GET)
