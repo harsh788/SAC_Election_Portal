@@ -41,10 +41,11 @@ exports.student_detail = asyncHandler(async (req, res, next) => {
 exports.student_create_get = asyncHandler(async (req, res, next) => {
     const allElections = await Election.find({}, "title").exec();
     
-    res.render("student_form", {
-        title: "Add student",
-        election_list: allElections,
-    });
+    // res.render("student_form", {
+    //     title: "Add student",
+    //     election_list: allElections,
+    // });
+    res.json(allElections);
 });
 
 // Add a new student (POST)
@@ -73,18 +74,19 @@ exports.student_create_post = [
         });
 
         if(!errors.isEmpty()) {
-            res.render("student_form", {
-                title: "Add student",
-                errors: errors.array(),
-                student: student,
-            });
+            // res.render("student_form", {
+            //     title: "Add student",
+            //     errors: errors.array(),
+            //     student: student,
+            // });
+            res.json({ title: "Add student", errors: errors.array(), student: student })
         } else {
             const election = await Election.findOne({title: req.body.choice});
             election.voter_list.push(student);
             await election.save();
 
             await student.save();
-            res.redirect("/dashboard");
+            res.status(200);
         }
     })
 ]

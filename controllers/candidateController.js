@@ -37,10 +37,11 @@ exports.candidate_detail = asyncHandler(async (req, res, next) => {
 exports.candidate_create_get = asyncHandler(async (req, res, next) => {
     const allElections = await Election.find({}, "title").exec();
 
-    res.render("candidate_form", {
-        title: "Add new candidate",
-        election_list: allElections,
-    });
+    // res.render("candidate_form", {
+    //     title: "Add new candidate",
+    //     election_list: allElections,
+    // });
+    res.json(allElections);
 });
 
 // Add a new candidate (POST)
@@ -65,12 +66,18 @@ exports.candidate_create_post = [
         if(!errors.isEmpty()) {
             const allElections = await Election.find({}, "title").exec();
 
-            res.render("candidate_form", {
+            // res.render("candidate_form", {
+            //     title: "Add new candidate",
+            //     errors: errors.array(),
+            //     candidate: candidate,
+            //     election_list: allElections,
+            // });
+            res.json({
                 title: "Add new candidate",
                 errors: errors.array(),
                 candidate: candidate,
                 election_list: allElections,
-            });
+            })
         } else {
             // Adding candidate to election's candidate list
             const election = await Election.findOne({title: req.body.choice});
@@ -78,7 +85,7 @@ exports.candidate_create_post = [
             await election.save();
             
             await candidate.save();
-            res.redirect(candidate.url);
+            res.status(200);
         }
     })
 ]
