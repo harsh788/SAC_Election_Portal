@@ -5,6 +5,7 @@ import Sidebar from './Sidebar';
 import AddStudent from './AddStudent';
 import AddCandidate from './AddCandidate';
 import DeleteStudent from './DeleteStudent';
+import DeleteCandidate from './DeleteCandidate';
 
 const Participants = () => {
     const [students, setStudents] = useState([]);
@@ -74,7 +75,7 @@ const Participants = () => {
                 </Button>
                 <br />
                 {addStudent && <AddStudent toggleAddStudent={toggleAddStudent}/>}
-                {deleteStudent && <DeleteStudent studentList={students} toggleDeleteCandidate={toggleDeleteCandidate}/>}
+                {deleteStudent && <DeleteStudent studentList={students} toggleDeleteStudent={toggleDeleteStudent}/>}
             </div>
         );
     }
@@ -94,11 +95,15 @@ const Participants = () => {
                         </li>
                     ))}
                 </ul>
-                <Button type="submit" color="primary" onClick={toggleAddCandidate}>
+                <Button type="submit" color="primary" onClick={toggleAddCandidate} style={{marginRight: 10}}>
                     Add Candidate
+                </Button>
+                <Button type="submit" color="primary" onClick={toggleDeleteCandidate}>
+                    Delete Candidate
                 </Button>
                 <br />
                 {addCandidate && <AddCandidate toggleAddCandidate={toggleAddCandidate}/>}
+                {deleteCandidate && <DeleteCandidate candidateList={candidates} toggleDeleteCandidate={toggleDeleteCandidate}/>}
             </div>
         );
     }
