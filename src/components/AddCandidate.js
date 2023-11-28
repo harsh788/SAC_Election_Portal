@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, Row, Col, Label, Input, FormGroup } from "reactstrap";
 
-const AddStudent = (props) => {
+const AddCandidate = (props) => {
     const [formData, setFormData] = useState({
-        name: '',
+        first_name: '',
+        last_name: '',
         roll_number: '',
         batch: '',
-        choice: ''
+        message: '',
+        choice: '',
     });
     const [electionsList, setElectionsList] = useState([]);
 
@@ -19,11 +21,11 @@ const AddStudent = (props) => {
     };
 
     const handleSubmit = e => {
-        props.toggleAddStudent();
+        props.toggleAddCandidate();
 
         e.preventDefault();
     
-        fetch('http://localhost:3000/dashboard/student/create', {
+        fetch('http://localhost:3000/dashboard/candidate/create', {
             method: 'POST',
             mode: "cors",
             credentials:"same-origin",
@@ -51,7 +53,7 @@ const AddStudent = (props) => {
     // Get the list of elections
     useEffect(() => {
         const fetchElections = async () => {
-            let data = await fetch("http://localhost:3000/dashboard/student/create");
+            let data = await fetch("http://localhost:3000/dashboard/candidate/create");
             let json = await data.json();
             
             setElectionsList(json);
@@ -60,54 +62,74 @@ const AddStudent = (props) => {
         fetchElections();
     }, []);
 
-    return (
+    return(
         <div style={{padding: 10}}>
             <Form onSubmit={handleSubmit}>
                 <FormGroup row>
-                    <Label htmlFor="name" md={2}>Name</Label>
+                    <Label htmlFor="first_name" md={2}>Name</Label>
                     <Col md={10}>
                         <Input
                             type="text"
-                            name="name"
-                            id="name"
-                            placeholder="Enter Name"
+                            name="first_name"
+                            id="first_name"
+                            placeholder="First Name"
                             value={formData.name}
                             onChange={handleChange}
                         />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
-                    <Label for="roll_number" sm={2}>
-                        Roll Number
-                    </Label>
-                    <Col sm={10}>
+                    <Label htmlFor="last_name" md={2}>Name</Label>
+                    <Col md={10}>
                         <Input
                             type="text"
-                            name="roll_number"
-                            id="roll_number"
-                            placeholder="Enter Roll Number"
-                            value={formData.roll_number}
+                            name="last_name"
+                            id="last_name"
+                            placeholder="Last Name"
+                            value={formData.name}
                             onChange={handleChange}
                         />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
-                    <Label for="batch" sm={2}>
-                        Batch
-                    </Label>
+                    <Label for="roll_number" sm={2}>Roll Number</Label>
                     <Col sm={10}>
-                        <Input
-                            type="select"
-                            name="batch"
-                            id="batch"
-                            value={formData.batch}
+                        <Input 
+                            type="text" 
+                            name="roll_number" 
+                            id="roll_number" 
+                            placeholder="Roll Number" 
                             onChange={handleChange}
+                        />
+                    </Col>
+                </FormGroup>
+                <FormGroup row>
+                    <Label for="batch" sm={2}>Batch</Label>
+                    <Col sm={10}>
+                        <Input 
+                            type="select" 
+                            name="batch" 
+                            id="batch" 
+                            value={formData.batch} 
+                            onChange={handleChange} 
                         >
                             <option value="">Select Batch</option>
                             <option value="IMT2020">IMT2020</option>
                             <option value="IMT2019">IMT2019</option>
                             <option value="MT2022">MT2022</option>
                         </Input>
+                    </Col>
+                </FormGroup>
+                <FormGroup row>
+                    <Label for="message" sm={2}>Message</Label>
+                    <Col sm={10}>
+                        <Input 
+                            type="textarea" 
+                            name="message" 
+                            id="message" 
+                            placeholder="Message" 
+                            onChange={handleChange}
+                        />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
@@ -143,4 +165,4 @@ const AddStudent = (props) => {
     );
 }
 
-export default AddStudent;
+export default AddCandidate;

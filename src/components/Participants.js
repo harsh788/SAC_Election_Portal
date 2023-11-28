@@ -3,15 +3,19 @@ import { Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import AddStudent from './AddStudent';
+import AddCandidate from './AddCandidate';
 
 const Participants = () => {
     const [students, setStudents] = useState([]);
     const [candidates, setCandidates] = useState([]);
     const [addStudent, setAddStudent] = useState(false);
+    const [addCandidate, setAddCandidate] = useState(false);
 
     const toggleAddStudent = () => {
-        console.log("inside");
         setAddStudent(!addStudent);
+    }
+    const toggleAddCandidate = () => {
+        setAddCandidate(!addCandidate);
     }
 
     useEffect(() => {
@@ -77,11 +81,11 @@ const Participants = () => {
                         </li>
                     ))}
                 </ul>
-                <Link to={`/dashboard/election/`}>
-                    <Button type="submit" color="primary" >
-                        Add Candidate
-                    </Button>
-                </Link>
+                {!addCandidate && <Button type="submit" color="primary" onClick={toggleAddCandidate}>
+                    Add Candidate
+                </Button>}
+                <br />
+                {addCandidate && <AddCandidate toggleAddCandidate={toggleAddCandidate}/>}
             </div>
         );
     }
