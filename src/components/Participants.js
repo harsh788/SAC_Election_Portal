@@ -4,18 +4,27 @@ import { Link } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import AddStudent from './AddStudent';
 import AddCandidate from './AddCandidate';
+import DeleteStudent from './DeleteStudent';
 
 const Participants = () => {
     const [students, setStudents] = useState([]);
     const [candidates, setCandidates] = useState([]);
     const [addStudent, setAddStudent] = useState(false);
     const [addCandidate, setAddCandidate] = useState(false);
+    const [deleteStudent, setDeleteStudent] = useState(false);
+    const [deleteCandidate, setDeleteCandidate] = useState(false);
 
     const toggleAddStudent = () => {
         setAddStudent(!addStudent);
     }
     const toggleAddCandidate = () => {
         setAddCandidate(!addCandidate);
+    }
+    const toggleDeleteStudent = () => {
+        setDeleteStudent(!deleteStudent);
+    }
+    const toggleDeleteCandidate = () => {
+        setDeleteCandidate(!deleteCandidate);
     }
 
     useEffect(() => {
@@ -57,11 +66,15 @@ const Participants = () => {
                         </li>
                     ))}
                 </ul>
-                {!addStudent && <Button type="submit" color="primary" onClick={toggleAddStudent}>
+                <Button type="submit" color="primary" onClick={toggleAddStudent} style={{marginRight: 10}}>
                     Add Student
-                </Button>} 
+                </Button>
+                <Button type="submit" color="primary" onClick={toggleDeleteStudent}>
+                    Delete Student
+                </Button>
                 <br />
                 {addStudent && <AddStudent toggleAddStudent={toggleAddStudent}/>}
+                {deleteStudent && <DeleteStudent studentList={students} toggleDeleteCandidate={toggleDeleteCandidate}/>}
             </div>
         );
     }
@@ -81,9 +94,9 @@ const Participants = () => {
                         </li>
                     ))}
                 </ul>
-                {!addCandidate && <Button type="submit" color="primary" onClick={toggleAddCandidate}>
+                <Button type="submit" color="primary" onClick={toggleAddCandidate}>
                     Add Candidate
-                </Button>}
+                </Button>
                 <br />
                 {addCandidate && <AddCandidate toggleAddCandidate={toggleAddCandidate}/>}
             </div>
