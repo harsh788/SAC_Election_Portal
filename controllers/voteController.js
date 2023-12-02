@@ -14,7 +14,13 @@ exports.vote_list = asyncHandler(async (req, res, next) => {
         allStudents.push(await Student.findById(allVotes[index].voter, "name").exec());
     }
     // console.log(allStudents);
-    res.render("vote_list", {
+    // res.render("vote_list", {
+    //     title: "List of all the votes",
+    //     vote_list: allVotes,
+    //     candidate_list: allCandidates,
+    //     student_list: allStudents,
+    // });
+    res.json({
         title: "List of all the votes",
         vote_list: allVotes,
         candidate_list: allCandidates,
@@ -22,25 +28,24 @@ exports.vote_list = asyncHandler(async (req, res, next) => {
     });
 });
 
-// Create a new vote (GET)
+// Update a new vote (GET)
 exports.vote_update_get = asyncHandler(async (req, res, next) => {
     const vote = await Vote.findById(req.params.id).exec();
     const election = await Election.findOne({votes: vote}, "candidates").exec();
-    const voter = await Student.findById(vote.voter, "name").exec();
 
     let candidate_list = [];
     for(let index=0;index<election.candidates.length;index++) {
         candidate_list.push(await Candidate.findOne(election.candidates[index]));
     }
  
-    res.render("vote_update", {
-        title: "Updating vote",
-        student: voter,
-        candidates: candidate_list,
-    });
+    // res.render("vote_update", {
+    //     title: "Updating vote",
+    //     candidates: candidate_list,
+    // });
+    res.json({candidate_list: candidate_list});
 });
 
-// Create a new vote (POST)
+// Update a new vote (POST)
 exports.vote_update_post = asyncHandler(async (req, res, next) => {
     const old_vote = await Vote.findById(req.params.id).exec();
     const election = await Election.findOne({votes: old_vote}).exec();
