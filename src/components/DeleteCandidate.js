@@ -29,7 +29,7 @@ const DeleteCandidate = (props) => {
 
         e.preventDefault();
 
-        fetch(`http://localhost:3000/dashboard/candidate/${candidateID}/delete`, {
+        fetch(`http://localhost:5000/dashboard/candidate/${candidateID}/delete`, {
             method: 'POST',
             mode: "cors",
             credentials:"same-origin",
@@ -57,7 +57,7 @@ const DeleteCandidate = (props) => {
     useEffect(() => {
         const fetchCandidateDetails = async () => {
             if(candidateID === 0) return;
-            let data = await fetch(`http://localhost:3000/dashboard/candidate/${candidateID}/delete`);
+            let data = await fetch(`http://localhost:5000/dashboard/candidate/${candidateID}/delete`);
             let json = await data.json();
 
             setCandidateDetails(json);

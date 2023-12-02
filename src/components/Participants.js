@@ -31,7 +31,7 @@ const Participants = () => {
     useEffect(() => {
         const fetchStudents = async () => {
             try {
-                let data = await fetch("http://localhost:3000/dashboard/students");
+                let data = await fetch("http://localhost:5000/dashboard/students");
                 let json = await data.json();
 
                 setStudents(json);
@@ -41,7 +41,7 @@ const Participants = () => {
         }
         const fetchCandidates = async () => {
             try {
-                let data = await fetch("http://localhost:3000/dashboard/candidates");
+                let data = await fetch("http://localhost:5000/dashboard/candidates");
                 let json = await data.json();
 
                 setCandidates(json);

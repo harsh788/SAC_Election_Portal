@@ -25,7 +25,7 @@ const AddCandidate = (props) => {
 
         e.preventDefault();
     
-        fetch('http://localhost:3000/dashboard/candidate/create', {
+        fetch('http://localhost:5000/dashboard/candidate/create', {
             method: 'POST',
             mode: "cors",
             credentials:"same-origin",
@@ -53,7 +53,7 @@ const AddCandidate = (props) => {
     // Get the list of elections
     useEffect(() => {
         const fetchElections = async () => {
-            let data = await fetch("http://localhost:3000/dashboard/candidate/create");
+            let data = await fetch("http://localhost:5000/dashboard/candidate/create");
             let json = await data.json();
             
             setElectionsList(json);

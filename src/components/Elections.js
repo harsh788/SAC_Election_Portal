@@ -40,7 +40,7 @@ const Elections = () => {
         // Fetch all the elections
         const fetchElections = async () => {
             try {
-                let data = await fetch("http://localhost:3000/dashboard/elections");
+                let data = await fetch("http://localhost:5000/dashboard/elections");
                 let json = await data.json();
                 let electionJson = json.elections;
                 let voteJson = json.votes;
