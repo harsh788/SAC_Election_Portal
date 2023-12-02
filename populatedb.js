@@ -17,7 +17,7 @@ const elections = [];
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 
-const mongoDB = userArgs[0];
+const mongoDB = "mongodb://localhost:27017/myDB";
 
 main().catch((err) => console.log(err));
 async function main() {

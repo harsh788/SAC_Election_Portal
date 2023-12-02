@@ -1,3 +1,4 @@
+#! /usr/bin/env node
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -45,11 +46,13 @@ app.use(function(err, req, res, next) {
 
 // Setup mongoose connection
 mongoose.set("strictQuery", false);
-const mongoDB = "mongodb+srv://admin:tMsP2rJmO99fkyBB@cluster0.pcr4ccg.mongodb.net/SAC_election?retryWrites=true&w=majority";
+const mongoDB = "mongodb://mongo_container:27017/myDB";
 
 main().catch((err) => console.log(err));
 async function main() {
+  console.log("Debug: About to connect");
   await mongoose.connect(mongoDB);
+  console.log("Debug: Should be connected?");
 }
 
 module.exports = app;
