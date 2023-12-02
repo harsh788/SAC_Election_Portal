@@ -1,0 +1,35 @@
+version: '3'
+services:
+  frontend:
+    image: frontend_image
+    container_name: frontend_container
+    ports:
+      - "3000:3000"
+    networks:
+      - my_network
+
+  backend:
+    image: backend_image
+    container_name: backend_container
+    ports:
+      - "5000:5000"
+    # environment:
+    #   - MONGO_URI=mongodb://mongo:27017/sac-election
+    networks:
+      - my_network
+
+  # mongo:
+  #   image: mongo
+  #   container_name: mongo_container
+  #   ports:
+  #     - "27017:27017"
+  #   networks:
+  #     - mern
+
+# networks:
+#   mern:
+#     driver: bridge
+
+networks:
+  my_network:
+    name: mern
