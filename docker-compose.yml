@@ -5,31 +5,22 @@ services:
     container_name: frontend_container
     ports:
       - "3000:3000"
-    networks:
-      - my_network
+    depends_on:
+      - backend
 
   backend:
     image: harsh788/backend_image
     container_name: backend_container
     ports:
       - "5000:5000"
-    # environment:
-    #   - MONGO_URI=mongodb://mongo:27017/sac-election
-    networks:
-      - my_network
+    depends_on:
+      - mongo
 
-  # mongo:
-  #   image: mongo
-  #   container_name: mongo_container
-  #   ports:
-  #     - "27017:27017"
-  #   networks:
-  #     - mern
+  mongo:
+    image: mongo
+    container_name: mongo_container
+    ports:
+      - "27017:27017"
+    volumes:
+      - /home/harsh/Acads/sem7/SPE/SAC_Election_Portal/data:/data/db:rw
 
-# networks:
-#   mern:
-#     driver: bridge
-
-networks:
-  my_network:
-    name: mern
