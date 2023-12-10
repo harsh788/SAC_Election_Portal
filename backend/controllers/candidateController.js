@@ -5,9 +5,11 @@ const Student = require("../models/student");
 const mongoose = require('mongoose');
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
+const logger = require("../logger");
 
 // Display list of all candidates
 exports.candidate_list = asyncHandler(async (req, res, next) => {
+    logger.info("GET request for candidate list");
     const allCandidates = await Candidate.find().sort({first_name: 1}).exec();
 
     // res.render("candidate_list", {
@@ -24,8 +26,10 @@ exports.candidate_detail = asyncHandler(async (req, res, next) => {
     if(candidate === null) {
         const err = new Error("Candidate not found");
         err.status = 404;
+        logger.error(err);
         return next(err);
     }
+    logger.info(`GET request for candidate detail with roll number: ${candidate.roll_number}`);
 
     res.render("candidate_detail", {
         title: "Candidate watch",
@@ -35,6 +39,7 @@ exports.candidate_detail = asyncHandler(async (req, res, next) => {
 
 // Add a new candidate (GET)
 exports.candidate_create_get = asyncHandler(async (req, res, next) => {
+    logger.info("GET request for candidate create");
     const allElections = await Election.find({}, "title").exec();
 
     // res.render("candidate_form", {
@@ -53,6 +58,7 @@ exports.candidate_create_post = [
     body("message").escape(),
 
     asyncHandler(async (req, res, next) => {
+        logger.info("POST request for candidate create");
         const errors = validationResult(req);
 
         const candidate = new Candidate({
@@ -72,6 +78,7 @@ exports.candidate_create_post = [
             //     candidate: candidate,
             //     election_list: allElections,
             // });
+            logger.error(errors);
             res.json({
                 title: "Add new candidate",
                 errors: errors.array(),
@@ -95,6 +102,7 @@ exports.candidate_delete_get = asyncHandler(async (req, res, next) => {
     const candidate = await Candidate.findById(req.params.id).exec();
     const vote_list = await Vote.find({selection: candidate}).exec();
     const election_list = await Election.find({candidates: candidate}, "title").exec();
+    logger.info(`GET request for candidate delete with roll number: ${candidate.roll_number}`);
     
     let student_name = [];
     for(let index=0;index<vote_list.length;index++) {
@@ -122,6 +130,7 @@ exports.candidate_delete_post = asyncHandler(async (req, res, next) => {
     const candidate = await Candidate.findById(req.params.id).exec();
     const vote_list = await Vote.find({selection: candidate}).exec();
     const election_list = await Election.find({candidates: candidate}).exec();
+    logger.info(`POST request for candidate delete with roll number: ${candidate.roll_number}`)
 
     // Update the vote list and candidate list of the elections which involves the candidate to be deleted
     for(index=0;index<election_list.length;index++) {

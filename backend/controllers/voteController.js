@@ -6,6 +6,7 @@ const Election = require("../models/election");
 
 // Display list of all votes (display all information here)
 exports.vote_list = asyncHandler(async (req, res, next) => {
+    logger.info("GET request for vote list");
     const allVotes = await Vote.find().sort({ timestamp: 1 }).exec();
     
     let allCandidates = [], allStudents = [];
@@ -32,6 +33,7 @@ exports.vote_list = asyncHandler(async (req, res, next) => {
 exports.vote_update_get = asyncHandler(async (req, res, next) => {
     const vote = await Vote.findById(req.params.id).exec();
     const election = await Election.findOne({votes: vote}, "candidates").exec();
+    logger.info(`GET request for updating a vote by ${vote.voter}`);
 
     let candidate_list = [];
     for(let index=0;index<election.candidates.length;index++) {
@@ -50,6 +52,7 @@ exports.vote_update_post = asyncHandler(async (req, res, next) => {
     const old_vote = await Vote.findById(req.params.id).exec();
     const election = await Election.findOne({votes: old_vote}).exec();
     const candidate = await Candidate.findOne({roll_number: req.body.choice});
+    logger.info(`POST request for updating a vote by ${old_vote.voter} with candidate ${candidate.roll_number}`);
 
     // Updating the vote list in Election
     const voteIndex = election.votes.findIndex(vote => vote._id.toString()===old_vote._id.toString());

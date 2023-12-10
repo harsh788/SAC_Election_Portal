@@ -4,9 +4,11 @@ const Candidate = require("../models/candidate");
 const Election = require("../models/election");
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
+const logger = require("../logger");
 
 // Display list of all students
 exports.student_list = asyncHandler(async (req, res, next) => {
+    logger.info("GET request for student list");
     const allStudents = await Student.find().sort({ roll_number: 1, name: 1 }).exec();
 
     // res.render("student_list", {
@@ -25,8 +27,10 @@ exports.student_detail = asyncHandler(async (req, res, next) => {
     if(student === null) {
         const err = new Error("Student not found");
         err.status = 404;
+        logger.error(err);
         return next(err);
     }
+    logger.info(`GET request for student detail with roll number: ${student.roll_number}`);
     
     const candidate = (voteByStudent===null ? null : await Candidate.findById(voteByStudent.selection).exec());
 
@@ -39,6 +43,7 @@ exports.student_detail = asyncHandler(async (req, res, next) => {
 
 // Add a new student (GET)
 exports.student_create_get = asyncHandler(async (req, res, next) => {
+    logger.info("GET request for student create");
     const allElections = await Election.find({}, "title").exec();
     
     // res.render("student_form", {
@@ -65,6 +70,7 @@ exports.student_create_post = [
 
     // Process request after sanitization and validation
     asyncHandler(async (req, res, next) => {
+        logger.info("POST request for student create");
         const errors = validationResult(req);
 
         const student = new Student({
@@ -79,6 +85,7 @@ exports.student_create_post = [
             //     errors: errors.array(),
             //     student: student,
             // });
+            logger.error(errors);
             res.json({ title: "Add student", errors: errors.array(), student: student })
         } else {
             const election = await Election.findOne({title: req.body.choice});
@@ -96,6 +103,7 @@ exports.student_delete_get = asyncHandler(async (req, res, next) => {
     const student = await Student.findById(req.params.id).exec();
     const vote_list = await Vote.find({voter: student}).exec();
     const election_list = await Election.find({voter_list: student}, "title").exec();
+    logger.info(`GET request for student delete with roll number: ${student.roll_number}`);
 
     let candidate_name = [];
     for(let index=0;index<vote_list.length;index++) {
@@ -123,6 +131,7 @@ exports.student_delete_post = asyncHandler(async (req, res, next) => {
     const student = await Student.findById(req.params.id).exec();
     const vote_list = await Vote.find({voter: student}).exec();
     const election_list = await Election.find({voter_list: student}, "title").exec();
+    logger.info(`POST request for student delete with roll number: ${student.roll_number}`);
 
     // Update the vote list and candidate list of the elections which involves the student to be deleted
     for(index=0;index<election_list.length;index++) {
