@@ -4,6 +4,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const winstonlogger = require('./logger');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
@@ -23,6 +24,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
+app.use((req, res, next) => {
+  winstonlogger.info(`${req.method} ${req.url}`);
+  next();
+});
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -50,9 +55,14 @@ const mongoDB = "mongodb://mongo_container:27017/myDB";
 
 main().catch((err) => console.log(err));
 async function main() {
-  console.log("Debug: About to connect");
-  await mongoose.connect(mongoDB);
-  console.log("Debug: Should be connected?");
+  winstonlogger.info("Connecting to MongoDB");
+  try {
+    await mongoose.connect(mongoDB);
+    winstonlogger.info("Connected to MongoDB");
+  } catch (error) {
+    winstonlogger.error(error);
+  }
+  // await mongoose.connect(mongoDB);
 }
 
 module.exports = app;
