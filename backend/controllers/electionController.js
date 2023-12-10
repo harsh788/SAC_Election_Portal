@@ -32,7 +32,7 @@ exports.index = asyncHandler(async (req, res, next) => {
 
 // Display all the ongoing elections
 exports.election_list = asyncHandler(async (req, res, next) => {
-    logger.info("GEt request for election list");
+    logger.info("GET request for election list");
     const allElections = await Election.find().exec();
     const votesPerElection = [];
 
@@ -52,12 +52,7 @@ exports.election_list = asyncHandler(async (req, res, next) => {
         }
         votesPerElection.push(Object.fromEntries(votes));
     }
-    // console.log(votesPerElection);
-
-    // res.render("election_list", {
-    //     title: "Ongoing elections",
-    //     election_list: allElections,
-    // });
+    
     res.status(200).send({elections: allElections, votes: votesPerElection});
 });
 

@@ -3,6 +3,7 @@ const Student = require("../models/student");
 const Candidate = require("../models/candidate");
 const asyncHandler = require("express-async-handler");
 const Election = require("../models/election");
+const logger = require("../logger");
 
 // Display list of all votes (display all information here)
 exports.vote_list = asyncHandler(async (req, res, next) => {
@@ -14,13 +15,7 @@ exports.vote_list = asyncHandler(async (req, res, next) => {
         allCandidates.push(await Candidate.findById(allVotes[index].selection, "first_name").exec());
         allStudents.push(await Student.findById(allVotes[index].voter, "name").exec());
     }
-    // console.log(allStudents);
-    // res.render("vote_list", {
-    //     title: "List of all the votes",
-    //     vote_list: allVotes,
-    //     candidate_list: allCandidates,
-    //     student_list: allStudents,
-    // });
+    
     res.json({
         title: "List of all the votes",
         vote_list: allVotes,
@@ -33,17 +28,13 @@ exports.vote_list = asyncHandler(async (req, res, next) => {
 exports.vote_update_get = asyncHandler(async (req, res, next) => {
     const vote = await Vote.findById(req.params.id).exec();
     const election = await Election.findOne({votes: vote}, "candidates").exec();
-    logger.info(`GET request for updating a vote by ${vote.voter}`);
+    logger.info(`GET request for updating a vote`);
 
     let candidate_list = [];
     for(let index=0;index<election.candidates.length;index++) {
         candidate_list.push(await Candidate.findOne(election.candidates[index]));
     }
- 
-    // res.render("vote_update", {
-    //     title: "Updating vote",
-    //     candidates: candidate_list,
-    // });
+
     res.json({candidate_list: candidate_list});
 });
 
@@ -52,7 +43,7 @@ exports.vote_update_post = asyncHandler(async (req, res, next) => {
     const old_vote = await Vote.findById(req.params.id).exec();
     const election = await Election.findOne({votes: old_vote}).exec();
     const candidate = await Candidate.findOne({roll_number: req.body.choice});
-    logger.info(`POST request for updating a vote by ${old_vote.voter} with candidate ${candidate.roll_number}`);
+    logger.info(`POST request for updating a vote`);
 
     // Updating the vote list in Election
     const voteIndex = election.votes.findIndex(vote => vote._id.toString()===old_vote._id.toString());

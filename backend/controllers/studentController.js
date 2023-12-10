@@ -11,10 +11,6 @@ exports.student_list = asyncHandler(async (req, res, next) => {
     logger.info("GET request for student list");
     const allStudents = await Student.find().sort({ roll_number: 1, name: 1 }).exec();
 
-    // res.render("student_list", {
-    //     title: "Registered students",
-    //     student_list: allStudents,
-    // });
     res.json(allStudents);
 });
 
@@ -45,11 +41,7 @@ exports.student_detail = asyncHandler(async (req, res, next) => {
 exports.student_create_get = asyncHandler(async (req, res, next) => {
     logger.info("GET request for student create");
     const allElections = await Election.find({}, "title").exec();
-    
-    // res.render("student_form", {
-    //     title: "Add student",
-    //     election_list: allElections,
-    // });
+
     res.json(allElections);
 });
 
@@ -80,11 +72,6 @@ exports.student_create_post = [
         });
 
         if(!errors.isEmpty()) {
-            // res.render("student_form", {
-            //     title: "Add student",
-            //     errors: errors.array(),
-            //     student: student,
-            // });
             logger.error(errors);
             res.json({ title: "Add student", errors: errors.array(), student: student })
         } else {
@@ -110,13 +97,6 @@ exports.student_delete_get = asyncHandler(async (req, res, next) => {
         candidate_name.push(await Candidate.findById(vote_list[index].selection, "first_name").exec());
     }
 
-    // res.render("student_delete", {
-        // title: "Delete student entry",
-        // student: student,
-        // vote_list: vote_list,
-        // candidate_list: candidate_name,
-        // election_list: election_list,
-    // });
     res.json({
         title: "Delete student entry",
         student: student,
