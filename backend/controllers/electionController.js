@@ -89,7 +89,12 @@ exports.election_vote_get = asyncHandler(async (req, res, next) => {
         candidate_list.push(await Candidate.findById(election_detail.candidates[index]).exec());
     }
 
-    res.render("election_vote", {
+    // res.render("election_vote", {
+    //     title: "Cast a vote",
+    //     election: election_detail,
+    //     candidates: candidate_list,
+    // });
+    res.send({
         title: "Cast a vote",
         election: election_detail,
         candidates: candidate_list,
@@ -110,10 +115,10 @@ exports.election_vote_post = asyncHandler(async (req, res, next) => {
             candidate_list.push(await Candidate.findById(election_detail.candidates[index]).exec());
         }
 
-        res.render("election_vote", {
+        res.send({
             title: "Cast a vote",
             election: election_detail,
-            candidate_list: candidate_list,
+            candidates: candidate_list,
             errors: "Student with roll number " + req.body.voter_roll_number + " is not authorised to vote."
         });
     } else {
@@ -134,7 +139,7 @@ exports.election_vote_post = asyncHandler(async (req, res, next) => {
         await election.save();
 
         await vote.save();
-        res.redirect('/dashboard');
+        res.status(200);
     }
 });
 

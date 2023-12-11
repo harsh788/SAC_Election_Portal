@@ -9,14 +9,47 @@ const Votes = () => {
     const [voteID, setVoteID] = useState(0);
     const [edit, setEdit] = useState(false);
     const [electionCandidates, setElectionCandidates] = useState([]);
+    const [updatedCandidate, setUpdatedCandidate] = useState('');
 
     const toggleEditStudent = (id) => {
         setEdit(!edit);
         setVoteID(id);
     }
 
-    const handleSubmit = (e) => {
+    const handleEdit = e => {
+        setUpdatedCandidate(e.target.value);
+    }
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        fetch(`http://localhost:5000/dashboard/vote/${voteID}/update`, {
+            method: 'POST',
+            mode: 'cors',
+            credentials:"same-origin",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                choice: updatedCandidate,
+            }),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Form data sent:', data);
+            // Handle success, reset form, show success message, etc.
+        })
+        .catch(error => {
+            console.error('Error sending form data:', error);
+            // Handle error, show error message, etc.
+        });
+
+        toggleEditStudent(0);
     }
 
     useEffect(() => {
@@ -76,7 +109,7 @@ const Votes = () => {
                     {edit && <Form onSubmit={handleSubmit}>
                         <div className="form-group">
                             <label htmlFor="choice">Select a candidate</label>
-                            <select className="form-control" id="choice" name="choice">
+                            <select className="form-control" id="choice" name="choice" onChange={handleEdit}>
                                 {electionCandidates.map((candidate, index) => (
                                     <option key={index} value={candidate.roll_number}>{candidate.first_name} {candidate.last_name}</option>
                                 ))}

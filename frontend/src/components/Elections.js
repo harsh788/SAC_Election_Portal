@@ -2,32 +2,39 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardTitle, CardText, CardBody, Button } from 'reactstrap';
 import {Link} from 'react-router-dom';
 import Sidebar from './Sidebar';
+import AddVote from './AddVote';
 
 function RenderElectionItem({ election, votes }) {
+    const [adding, setAdding] = useState(false);
+    const toggleAdding = () => {
+        setAdding(!adding);
+    }
+
     return (
-        <Card style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 10 }}>
-            <h3>{election.title}</h3>
-            <CardBody>
-                <div style={{ textAlign: 'center' }}>
-                    Number of candidates: {election.candidates.length} <br />
-                    Number of voters: {election.voter_list.length} <br />
-                    Number of votes already registered: {election.votes.length} <br />
-                </div>
-            </CardBody>
-            <h4>Standings</h4>
-            <CardBody>
-                <ul>
-                    {Object.entries(votes).map(([candidate, count], index) => (
-                        <li key={index}><strong>{candidate}:</strong> {count}</li>
-                    ))}
-                </ul>
-            </CardBody>
-            <Link to={`/dashboard/election/${election._id}`}>
-                <Button type="submit" color="primary">
+        <div>
+            {!adding && <Card style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 10 }}>
+                <h3>{election.title}</h3>
+                <CardBody>
+                    <div style={{ textAlign: 'center' }}>
+                        Number of candidates: {election.candidates.length} <br />
+                        Number of voters: {election.voter_list.length} <br />
+                        Number of votes already registered: {election.votes.length} <br />
+                    </div>
+                </CardBody>
+                <h4>Standings</h4>
+                <CardBody>
+                    <ul>
+                        {Object.entries(votes).map(([candidate, count], index) => (
+                            <li key={index}><strong>{candidate}:</strong> {count}</li>
+                        ))}
+                    </ul>
+                </CardBody>
+                <Button type="submit" color="primary" onClick={toggleAdding}>
                     Vote
                 </Button>
-            </Link>
-        </Card>
+            </Card>}
+            {adding && <AddVote electionID={election._id} toggleAdding={toggleAdding}/>}
+        </div>
     );
 }
 
