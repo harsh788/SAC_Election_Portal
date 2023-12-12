@@ -5,7 +5,7 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-describe('Vote_Controller', () => {
+describe('Vote Controller', () => {
 
     // test vote_list function
     describe('/GET vote_list', () => {
@@ -14,7 +14,7 @@ describe('Vote_Controller', () => {
             .get('/dashboard/votes')
             .end((err, res) => {
                 if(err){
-                    // console.error(err);
+                    console.error(err);
                     logger.error('Error during test: ' + toString(err));
                     logger.error('Test failed');
                     return done(err);
@@ -48,6 +48,8 @@ describe('Vote_Controller', () => {
             .end((err, res) => {
                 if(err){
                     console.error(err);
+                    logger.error('Error during test: ' + toString(err));
+                    logger.error('Test failed');
                     return done(err);
                 }
 
@@ -55,14 +57,85 @@ describe('Vote_Controller', () => {
                     expect(res).to.have.status(200);
                     expect(res.body).to.have.property('candidate_list').to.be.an('array');
                     done();
+
+                    logger.info('Test passed');
                 }
                 else{
                     done(new Error('Unexpected response body format'));
+                    logger.error('Unexpected response body format');
+                    logger.error('Test failed');
                 }
             });
         });
     });
+});
 
-    // test vote_update_post function
-    
+describe('Student Controller', () => {
+
+    // test student_list function
+    describe('/GET studennt_list', () => {
+        it('it should GET the list of all students', (done) => {
+            chai.request('http://localhost:5000')
+            .get('/dashboard/students')
+            .end((err, res) => {
+                if(err){
+                    console.error(err);
+                    logger.error('Error during test: ' + toString(err));
+                    logger.error('Test failed');
+                    return done(err);
+                }
+
+                expect(res).to.have.status(200);
+                expect(res.body).to.be.an('array');
+                done();
+
+                logger.info('Test passed');
+            });
+        });
+    });
+
+    // test student_detail function
+    describe('/GET student_detail/:id', () => {
+        it('it should GET the detail page for a student with valid ID', (done) => {
+            const student_id = '657744ad4a78ab65f4ea2c35';
+            chai.request('http://localhost:5000')
+            .get('/dashboard/student/' + student_id)
+            .end((err, res) => {
+                if(err){
+                    console.error(err);
+                    logger.error('Error during test: ' + toString(err));
+                    logger.error('Test failed');
+                    return done(err);
+                }
+
+                expect(res).to.have.status(200);
+                expect(res).to.be.html;
+                done();
+
+                logger.info('Test passed');
+            });
+        });
+
+        it('it should return a 500 status for an invalid ID', (done) => {
+            const student_id = '657744ad4a78ab65f4ea2c';
+            chai.request('http://localhost:5000')
+            .get('/dashboard/student/' + student_id)
+            .end((err, res) => {
+                if(err){
+                    console.error(err);
+                    logger.error('Error during test: ' + toString(err));
+                    logger.error('Test failed');
+                    return done(err);
+                }
+
+                expect(res).to.have.status(500);
+                done();
+
+                logger.info('Test passed');
+            });
+        });
+    });
+
+    // test student_create_post function
+
 });
