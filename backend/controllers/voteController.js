@@ -44,6 +44,7 @@ exports.vote_update_post = asyncHandler(async (req, res, next) => {
     const election = await Election.findOne({votes: old_vote}).exec();
     const candidate = await Candidate.findOne({roll_number: req.body.choice});
     logger.info(`POST request for updating a vote`);
+    logger.warn(`The vote changed from ${old_vote.selection} to ${candidate.roll_number}`);
 
     // Updating the vote list in Election
     const voteIndex = election.votes.findIndex(vote => vote._id.toString()===old_vote._id.toString());

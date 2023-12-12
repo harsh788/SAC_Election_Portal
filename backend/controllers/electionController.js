@@ -107,7 +107,7 @@ exports.election_vote_post = asyncHandler(async (req, res, next) => {
     const voter = await Student.findOne({ roll_number: req.body.voter_roll_number });
     if(voter===null) {
         // Invalid student details. Rerender the form
-        logger.info(`Invalid student details for roll number: ${req.body.voter_roll_number}`);
+        logger.error(`Invalid student details for roll number: ${req.body.voter_roll_number}`);
         const election_detail = await Election.findById(req.params.id).exec();
         let candidate_list = [];
 

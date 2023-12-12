@@ -94,6 +94,9 @@ exports.candidate_delete_get = asyncHandler(async (req, res, next) => {
         student_name.push(await Student.findById(vote_list[index].voter, "name").exec());
     }
 
+    logger.warn(`Candidate ${candidate.roll_number} has ${vote_list.length} votes`);
+    logger.warn(`Candidate ${candidate.first_name} ${candidate.last_name} is present in the following elections: ${election_list.map(election => election.title)}`)
+
     res.json({
         title: "Delete candidate entry",
         candidate: candidate,

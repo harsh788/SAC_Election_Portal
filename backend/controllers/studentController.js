@@ -27,7 +27,7 @@ exports.student_detail = asyncHandler(async (req, res, next) => {
         return next(err);
     }
     logger.info(`GET request for student detail with roll number: ${student.roll_number}`);
-    
+
     const candidate = (voteByStudent===null ? null : await Candidate.findById(voteByStudent.selection).exec());
 
     res.render("student_detail", {
@@ -96,6 +96,11 @@ exports.student_delete_get = asyncHandler(async (req, res, next) => {
     for(let index=0;index<vote_list.length;index++) {
         candidate_name.push(await Candidate.findById(vote_list[index].selection, "first_name").exec());
     }
+
+    if(candidate_name.length !== 0) {
+        logger.warn(`The student has voted for the following candidates: ${candidate_name.map(candidate => candidate.first_name)}`);
+    }
+    logger.warn(`The student has voted in the following elections: ${election_list.map(election => election.title)}`);
 
     res.json({
         title: "Delete student entry",
