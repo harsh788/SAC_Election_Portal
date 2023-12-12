@@ -135,7 +135,29 @@ describe('Student Controller', () => {
             });
         });
     });
+});
 
-    // test student_create_post function
+describe('Candidate Controller', () => {
+    
+    // test candidate_list function
+    describe('/GET candidate_list', () => {
+        it('it should GET a list of all candidates', (done) => {
+            chai.request('http://localhost:5000')
+            .get('/dashboard/candidates')
+            .end((err, res) => {
+                if(err){
+                    console.error(err);
+                    logger.error('Error during test: ' + toString(err));
+                    logger.error('Test failed');
+                    return done(err);
+                }
 
+                expect(res).to.have.status(200);
+                expect(res.body).to.be.an('array');
+                done();
+
+                logger.info('Test passed');
+            });
+        });
+    });
 });
