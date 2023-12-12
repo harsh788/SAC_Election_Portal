@@ -85,6 +85,14 @@ exports.candidate_create_post = [
 // Delete a candidate (GET)
 exports.candidate_delete_get = asyncHandler(async (req, res, next) => {
     const candidate = await Candidate.findById(req.params.id).exec();
+
+    if(!candidate) {
+        const err = new Error("Candidate not found");
+        err.status = 404;
+        logger.error(`Candidate not found`);
+        return next(err);
+    }
+
     const vote_list = await Vote.find({selection: candidate}).exec();
     const election_list = await Election.find({candidates: candidate}, "title").exec();
     logger.info(`GET request for candidate delete with roll number: ${candidate.roll_number}`);

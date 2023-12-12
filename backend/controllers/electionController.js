@@ -105,22 +105,12 @@ exports.election_vote_get = asyncHandler(async (req, res, next) => {
 exports.election_vote_post = asyncHandler(async (req, res, next) => {
     // Checking whether the voter is authorised to vote
     const voter = await Student.findOne({ roll_number: req.body.voter_roll_number });
-    if(voter===null) {
+    if(!voter) {
         // Invalid student details. Rerender the form
+        const err = new Error("Invalid student details");
+        err.status = 404;
         logger.error(`Invalid student details for roll number: ${req.body.voter_roll_number}`);
-        const election_detail = await Election.findById(req.params.id).exec();
-        let candidate_list = [];
-
-        for(index=0;index<election_detail.candidates.length;index++) {
-            candidate_list.push(await Candidate.findById(election_detail.candidates[index]).exec());
-        }
-
-        res.send({
-            title: "Cast a vote",
-            election: election_detail,
-            candidates: candidate_list,
-            errors: "Student with roll number " + req.body.voter_roll_number + " is not authorised to vote."
-        });
+        return next(err);
     } else {
         // Get candidate details
         logger.info(`POST request for casting a vote with details: ${req.body.choice}`);

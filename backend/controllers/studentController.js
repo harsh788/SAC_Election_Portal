@@ -88,6 +88,14 @@ exports.student_create_post = [
 // Delete a student (GET)
 exports.student_delete_get = asyncHandler(async (req, res, next) => {
     const student = await Student.findById(req.params.id).exec();
+
+    if(!student) {
+        const err = new Error("Student not found");
+        err.status = 404;
+        logger.error(`Student not found`);
+        return next(err);
+    }
+
     const vote_list = await Vote.find({voter: student}).exec();
     const election_list = await Election.find({voter_list: student}, "title").exec();
     logger.info(`GET request for student delete with roll number: ${student.roll_number}`);
