@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "devstart": "nodemon ./bin/www",
-    "serverstart": "DEBUG=final_project:* npm run devstart"
+    "serverstart": "DEBUG=final_project:* npm run devstart",
+    "test": "mocha ./test/Test.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -21,6 +22,10 @@
     "winston": "^3.11.0"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "chai": "^4.3.10",
+    "chai-http": "^4.4.0",
+    "mocha": "^10.2.0",
+    "nodemon": "^3.0.1",
+    "supertest": "^6.3.3"
   }
 }
