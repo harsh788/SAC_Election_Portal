@@ -17,6 +17,7 @@ const Votes = () => {
     }
 
     const handleEdit = e => {
+        console.log(e.target.value);
         setUpdatedCandidate(e.target.value);
     }
 
@@ -49,7 +50,7 @@ const Votes = () => {
             // Handle error, show error message, etc.
         });
 
-        toggleEditStudent(0);
+        // toggleEditStudent(0);
     }
 
     useEffect(() => {

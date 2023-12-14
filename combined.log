@@ -1,0 +1,87 @@
+2023-12-12T06:16:25.737Z info: Connecting to MongoDB
+2023-12-12T06:16:25.789Z info: Connected to MongoDB
+2023-12-12T06:16:42.153Z info: GET /dashboard/elections
+2023-12-12T06:16:42.156Z info: GET request for election list
+2023-12-12T06:16:42.210Z info: GET /dashboard/elections
+2023-12-12T06:16:42.213Z info: GET request for election list
+2023-12-12T06:16:45.873Z info: GET /dashboard/students
+2023-12-12T06:16:45.875Z info: GET request for student list
+2023-12-12T06:16:45.880Z info: GET /dashboard/candidates
+2023-12-12T06:16:45.880Z info: GET request for candidate list
+2023-12-12T06:16:45.892Z info: GET /dashboard/students
+2023-12-12T06:16:45.892Z info: GET request for student list
+2023-12-12T06:16:45.898Z info: GET /dashboard/candidates
+2023-12-12T06:16:45.899Z info: GET request for candidate list
+2023-12-12T06:16:49.718Z info: GET /dashboard/student/create
+2023-12-12T06:16:49.718Z info: GET request for student create
+2023-12-12T06:16:49.726Z info: GET /dashboard/student/create
+2023-12-12T06:16:49.727Z info: GET request for student create
+2023-12-12T06:17:07.412Z info: POST /dashboard/student/create
+2023-12-12T06:17:07.422Z info: POST request for student create
+2023-12-12T06:17:10.733Z info: GET /dashboard/elections
+2023-12-12T06:17:10.733Z info: GET request for election list
+2023-12-12T06:17:10.768Z info: GET /dashboard/elections
+2023-12-12T06:17:10.768Z info: GET request for election list
+2023-12-12T06:17:12.438Z info: GET /dashboard/election/6577fa903bd0d54e9a602f15
+2023-12-12T06:17:12.439Z info: GET request for casting a vote
+2023-12-12T06:17:12.451Z info: GET /dashboard/election/6577fa903bd0d54e9a602f15
+2023-12-12T06:17:12.451Z info: GET request for casting a vote
+2023-12-12T06:17:32.940Z info: POST /dashboard/election/6577fa903bd0d54e9a602f15
+2023-12-12T06:17:32.944Z error: Invalid student details for roll number: IMT2020129
+2023-12-12T06:17:37.015Z info: GET /dashboard/elections
+2023-12-12T06:17:37.015Z info: GET request for election list
+2023-12-12T06:17:37.043Z info: GET /dashboard/elections
+2023-12-12T06:17:37.044Z info: GET request for election list
+2023-12-12T06:17:58.682Z info: GET /dashboard/election/6577fa903bd0d54e9a602f15
+2023-12-12T06:17:58.682Z info: GET request for casting a vote
+2023-12-12T06:17:58.694Z info: GET /dashboard/election/6577fa903bd0d54e9a602f15
+2023-12-12T06:17:58.697Z info: GET request for casting a vote
+2023-12-12T06:18:03.280Z info: POST /dashboard/election/6577fa903bd0d54e9a602f15
+2023-12-12T06:18:03.283Z info: POST request for casting a vote with details: IMT2020065
+2023-12-12T06:18:05.079Z info: GET /dashboard/elections
+2023-12-12T06:18:05.080Z info: GET request for election list
+2023-12-12T06:18:05.109Z info: GET /dashboard/elections
+2023-12-12T06:18:05.109Z info: GET request for election list
+2023-12-12T06:18:14.331Z info: GET /dashboard/votes
+2023-12-12T06:18:14.332Z info: GET request for vote list
+2023-12-12T06:18:14.360Z info: GET /dashboard/votes
+2023-12-12T06:18:14.364Z info: GET request for vote list
+2023-12-12T06:18:18.542Z info: GET /dashboard/vote/6577fb1b870be8bbc08203d4/update
+2023-12-12T06:18:18.544Z info: GET /dashboard/votes
+2023-12-12T06:18:18.545Z info: GET request for vote list
+2023-12-12T06:18:18.549Z info: GET request for updating a vote
+2023-12-12T06:18:25.186Z info: POST /dashboard/vote/6577fb1b870be8bbc08203d4/update
+2023-12-12T06:18:25.193Z info: GET /dashboard/votes
+2023-12-12T06:18:25.193Z info: GET request for vote list
+2023-12-12T06:18:25.195Z info: POST request for updating a vote
+2023-12-12T06:18:25.195Z warn: The vote changed from 6577fa903bd0d54e9a602f08 to MT2022150
+2023-12-12T06:18:25.229Z info: GET /dashboard/votes
+2023-12-12T06:18:25.229Z info: GET request for vote list
+2023-12-12T06:18:26.458Z info: GET /dashboard/votes
+2023-12-12T06:18:26.458Z info: GET request for vote list
+2023-12-12T06:18:26.489Z info: GET /dashboard/votes
+2023-12-12T06:18:26.489Z info: GET request for vote list
+2023-12-12T06:18:31.397Z info: GET /dashboard/students
+2023-12-12T06:18:31.397Z info: GET request for student list
+2023-12-12T06:18:31.402Z info: GET /dashboard/candidates
+2023-12-12T06:18:31.402Z info: GET request for candidate list
+2023-12-12T06:18:31.413Z info: GET /dashboard/students
+2023-12-12T06:18:31.413Z info: GET request for student list
+2023-12-12T06:18:31.414Z info: GET /dashboard/candidates
+2023-12-12T06:18:31.414Z info: GET request for candidate list
+2023-12-12T06:19:05.413Z info: GET /dashboard/student/6577fae3870be8bbc0820398/delete
+2023-12-12T06:19:05.420Z error: Student not found
+2023-12-12T06:21:09.836Z info: GET /dashboard/candidate/6577fa903bd0d54e9a602f08/delete
+2023-12-12T06:21:09.845Z info: GET request for candidate delete with roll number: IMT2020065
+2023-12-12T06:21:09.847Z warn: Candidate IMT2020065 has 1 votes
+2023-12-12T06:21:09.847Z warn: Candidate Shridhar Sharma is present in the following elections: SAC 2023
+2023-12-12T06:21:13.038Z info: POST /dashboard/candidate/6577fa903bd0d54e9a602f08/delete
+2023-12-12T06:21:13.045Z info: POST request for candidate delete with roll number: IMT2020065
+2023-12-12T06:21:15.386Z info: GET /dashboard/students
+2023-12-12T06:21:15.386Z info: GET request for student list
+2023-12-12T06:21:15.399Z info: GET /dashboard/candidates
+2023-12-12T06:21:15.404Z info: GET request for candidate list
+2023-12-12T06:21:15.413Z info: GET /dashboard/candidates
+2023-12-12T06:21:15.414Z info: GET request for candidate list
+2023-12-12T06:21:15.416Z info: GET /dashboard/students
+2023-12-12T06:21:15.416Z info: GET request for student list
