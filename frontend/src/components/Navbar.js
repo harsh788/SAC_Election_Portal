@@ -16,21 +16,21 @@ const Navigation = () => {
   return (
     <div>
       <Navbar color="danger" dark>
-        <NavbarBrand href="/">eVote</NavbarBrand>
+        <NavbarBrand href="/">SAC Election Portal</NavbarBrand>
         <Nav>
           <NavItem>
             <NavLink style={{color: 'white'}} href="/">
-              Home
+              Elections
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink style={{color: 'white'}} href="/">
-              About
+            <NavLink style={{color: 'white'}} href="/participants">
+              Participants
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink style={{color: 'white'}} href="/">
-              Contact
+            <NavLink style={{color: 'white'}} href="/votes">
+              Votes
             </NavLink>
           </NavItem>
           <NavItem>
