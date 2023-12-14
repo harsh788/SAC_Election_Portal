@@ -55,7 +55,7 @@ pipeline {
                 }   
             }
         }
-        stage('Step 5: Ansible Deployment'){
+        stage('Stage 5: Ansible Deployment'){
             steps{
                 ansiblePlaybook becomeUser: null,
                 colorized: true,
@@ -65,6 +65,17 @@ pipeline {
                 inventory: 'deployment/inventory',
                 playbook: 'deployment/deploy.yml',
                 sudoUser: null
+            }
+        }
+        stage('Stage 6: Testing Backend') {
+            steps {
+                dir('backend') {
+                    script {
+                        // Assuming npm is available in the container
+                        sh 'npm install' // Install dependencies if needed
+                        sh 'npm test'    // Run the tests
+                    }
+                }
             }
         }
     }
