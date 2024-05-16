@@ -203,6 +203,12 @@ stage('Stage 6: Testing Backend') {
 }
 ```
 
+## Steps to run
+Install the node_modules folders in frontend and backend directories using `npm install`
+
+To spin up the containers and run locally: `sudo docker compose up` \
+To stop the running containers and delete them: `sudo docker compose down`
+
 ## API Documentation
 ### Schemas
 There are four schemas used in this project. They are as follows:
