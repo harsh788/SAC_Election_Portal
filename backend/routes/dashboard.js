@@ -6,7 +6,8 @@ const student_controller = require("../controllers/studentController");
 const candidate_controller = require("../controllers/candidateController");
 const vote_controller = require("../controllers/voteController");
 const election_controller = require("../controllers/electionController");
-
+const auth_controller = require('../controllers/authController');
+const authenticateToken = require("../authenticate");
 
 // ------ Election routes ------
 
@@ -56,7 +57,7 @@ router.post("/student/:id/update", student_controller.student_update_post);
 router.get("/student/:id", student_controller.student_detail);
 
 // GET request for list of all students
-router.get("/students", student_controller.student_list);
+router.get("/students", authenticateToken, student_controller.student_list);
 
 
 // ------ Candidate routes ------
@@ -97,5 +98,13 @@ router.post("/vote/:id/update", vote_controller.vote_update_post);
 // GET request for list of all votes
 router.get("/votes", vote_controller.vote_list);
 
+
+// ------ Login routes ------
+
+// POST request for signup
+router.post("/signup", auth_controller.signup_post);
+
+// POST request for login
+router.post("/login", auth_controller.login_post);
 
 module.exports = router;
