@@ -32,10 +32,11 @@ async function main() {
     mongoose.connection.close();
 }
 
-async function studentCreate(index, name, roll_number, batch) {
+async function studentCreate(index, name, roll_number, password, batch) {
     const studentdetail = {
         name: name,
         roll_number: roll_number,
+        password: password,
         batch: batch,
     };
     const student = new Student(studentdetail);
@@ -86,12 +87,12 @@ async function electionCreate(index, title, students, votes, candidates) {
 async function createStudents() {
     console.log("Adding students");
     await Promise.all([
-        studentCreate(0, "Anwit", "IMT2020532", "IMT2020"),
-        studentCreate(1, "Darshak", "IMT2020119", "IMT2020"),
-        studentCreate(2, "Anurag", "IMT2020093", "IMT2020"),
-        studentCreate(3, "Prem", "IMT2020044", "IMT2020"),
-        studentCreate(4, "Arya", "IMT2020084", "IMT2020"),
-        studentCreate(5, "Anshul", "MT2022069", "MT2022"),
+        studentCreate(0, "Anwit", "IMT2020532", "Anwit532", "IMT2020"),
+        studentCreate(1, "Darshak", "IMT2020119", "Darshak119", "IMT2020"),
+        studentCreate(2, "Anurag", "IMT2020093", "Anurag093", "IMT2020"),
+        studentCreate(3, "Prem", "IMT2020044", "Prem044", "IMT2020"),
+        studentCreate(4, "Arya", "IMT2020084", "Arya084", "IMT2020"),
+        studentCreate(5, "Anshul", "MT2022069", "Anshul069", "MT2022"),
     ]);
 }
 

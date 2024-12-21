@@ -51,7 +51,9 @@ app.use(function(err, req, res, next) {
 
 // Setup mongoose connection
 mongoose.set("strictQuery", false);
-const mongoDB = "mongodb://mongo_container:27017/myDB";
+// const mongoDB = "mongodb://mongo_container:27017/myDB";
+const mongoDB = "mongodb://localhost:27017/myDB";
+
 
 main().catch((err) => console.log(err));
 async function main() {
