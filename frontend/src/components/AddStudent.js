@@ -28,7 +28,8 @@ const AddStudent = (props) => {
             mode: "cors",
             credentials:"same-origin",
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'authorization': sessionStorage.getItem('token'),
             },
             body: JSON.stringify(formData)
         })

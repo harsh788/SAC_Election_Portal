@@ -31,7 +31,11 @@ const Participants = () => {
     useEffect(() => {
         const fetchStudents = async () => {
             try {
-                let data = await fetch("http://localhost:5000/dashboard/students");
+                let data = await fetch("http://localhost:5000/dashboard/students", {
+                    headers: {
+                        'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
+                    }
+                });
                 let json = await data.json();
 
                 setStudents(json);
